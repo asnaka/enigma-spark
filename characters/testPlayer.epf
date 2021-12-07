@@ -1,3 +1,5 @@
-Basic,Test Player,Elf,10,
+Basic,Test Player,Elf,10,High Elf,
 Class,True,Warlock,5,Sorcerer,5,
+Scores,8,10,12,13,14,15,
+SklProficiencies,n,n,n,p,p,n,n,n,n,n,p,n,e,n,p,n,n,p,
 Info,
