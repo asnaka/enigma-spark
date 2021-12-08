@@ -2,7 +2,7 @@
 import PySimpleGUI as sg
 from epfParser import character
 
-character = character('testPlayer.epf')
+character = character("characters/testPlayer.epf")
 
 
 def createLayout(c):
@@ -105,27 +105,7 @@ def createLayout(c):
     def createSavingThrows():
         pass
 
-    profColumn = sg.Column([
-        [sg.T("")],
-        [sg.T("[" + c.profs[1] + "]")],
-        [sg.T("[" + c.profs[2] + "]")],
-        [sg.T("[" + c.profs[3] + "]")],
-        [sg.T("[" + c.profs[4] + "]")],
-        [sg.T("[" + c.profs[5] + "]")],
-        [sg.T("[" + c.profs[6] + "]")],
-        [sg.T("[" + c.profs[7] + "]")],
-        [sg.T("[" + c.profs[8] + "]")],
-        [sg.T("[" + c.profs[9] + "]")],
-        [sg.T("[" + c.profs[10] + "]")],
-        [sg.T("[" + c.profs[11] + "]")],
-        [sg.T("[" + c.profs[12] + "]")],
-        [sg.T("[" + c.profs[13] + "]")],
-        [sg.T("[" + c.profs[14] + "]")],
-        [sg.T("[" + c.profs[15] + "]")],
-        [sg.T("[" + c.profs[16] + "]")],
-        [sg.T("[" + c.profs[17] + "]")],
-        [sg.T("[" + c.profs[18] + "]")]
-    ])
+    profColumn = sg.Column([[sg.T("")]] + [[sg.T("[" + c.profs[i + 1] + "]")] for i in range(18)])
     skillColumn = sg.Column([
         [sg.T("Skill")],
         [sg.T("Athletics")],

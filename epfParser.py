@@ -3,9 +3,7 @@
 
 # Function to calculate ability score modifiers
 def modCalc(score):
-    t = score - 10
-    modifier = t // 2
-    return modifier
+    return (score - 10) // 2
 
 
 # Function to calculate modifiers for skills
@@ -23,9 +21,9 @@ def skillModCalc(abiScr, prof, pBon):
 # .epf parser/opener
 class character:
 
-    def __init__(self, epfFile):
+    def __init__(self, filePath="characters/nullLoad.epf"):
         # Open given .epf file
-        self.epfFile = open("characters/" + epfFile, 'r')
+        self.epfFile = open(filePath, 'r')
         # Look at each line in the file
         for line in self.epfFile:
             t = line.split(',')
@@ -53,7 +51,8 @@ class character:
             elif t[0] == "Class":
                 self.jobInf = t
                 self.jobInf.remove('\n')
-                if self.jobInf[1] == 'True':
+                self.multiclassing = bool(self.jobInf[1])
+                if self.multiclassing:
                     job1 = self.jobInf[2] + ', ' + self.jobInf[3]
                     job2 = self.jobInf[4] + ', ' + self.jobInf[5]
                     self.job = job1 + '/' + job2
