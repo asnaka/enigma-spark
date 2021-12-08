@@ -15,6 +15,8 @@ def skillModCalc(abiScr, prof, pBon):
         mod = abiScr + pBon
     elif prof == 'e':
         mod = abiScr + eBon
+    else:
+        mod = None
     return mod
 
 
