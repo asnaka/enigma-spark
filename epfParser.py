@@ -29,7 +29,11 @@ class character:
 
     def __init__(self, filePath="characters/nullLoad.epf"):
         # Open given .epf file
-        self.epfFile = open(filePath, 'r')
+        try:
+            self.epfFile = open(filePath, 'r')
+        except OSError:
+            print("Cannot load " + filePath + ", loading null file instead.")
+            self.epfFile = open("characters/nullLoad.epf", 'r')
         # Look at each line in the file
         for line in self.epfFile:
             t = line.split(',')
