@@ -1,6 +1,10 @@
 # Imports
 # none
 
+def trFal(v):
+    return v in ("True", "true")
+
+
 # Function to calculate ability score modifiers
 def modCalc(score):
     return (score - 10) // 2
@@ -15,6 +19,8 @@ def skillModCalc(abiScr, prof, pBon):
         mod = abiScr + pBon
     elif prof == 'e':
         mod = abiScr + eBon
+    else:
+        mod = None
     return mod
 
 
@@ -23,7 +29,11 @@ class character:
 
     def __init__(self, filePath="characters/nullLoad.epf"):
         # Open given .epf file
-        self.epfFile = open(filePath, 'r')
+        try:
+            self.epfFile = open(filePath, 'r')
+        except OSError:
+            print("Cannot load " + filePath + ", loading null file instead.")
+            self.epfFile = open("characters/nullLoad.epf", 'r')
         # Look at each line in the file
         for line in self.epfFile:
             t = line.split(',')
@@ -51,13 +61,16 @@ class character:
             elif t[0] == "Class":
                 self.jobInf = t
                 self.jobInf.remove('\n')
-                self.multiclassing = bool(self.jobInf[1])
+                self.multiclassing = trFal(self.jobInf[1])
                 if self.multiclassing:
-                    job1 = self.jobInf[2] + ', ' + self.jobInf[3]
-                    job2 = self.jobInf[4] + ', ' + self.jobInf[5]
-                    self.job = job1 + '/' + job2
+                    self.job1 = self.jobInf[2] + ', ' + self.jobInf[3]
+                    self.job2 = self.jobInf[5] + ', ' + self.jobInf[6]
+                    self.job = self.job1 + '/' + self.job2
+                    self.subclass1 = self.jobInf[4]
+                    self.subclass2 = self.jobInf[7]
                 else:
                     self.job = self.jobInf[2] + ', ' + self.jobInf[3]
+                    self.subclass = self.jobInf[4]
             # Get the character's ability scores and calculate the ability modifiers
             elif t[0] == "Scores":
                 self.abiScores = t
@@ -100,4 +113,3 @@ class character:
             elif t[0] == "Info":
                 self.info = t
                 self.info.remove('\n')
-
