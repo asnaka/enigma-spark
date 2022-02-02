@@ -2,7 +2,7 @@
 import PySimpleGUI as sg
 from epfParser import character
 
-character = character("characters/testPlayer.epf")
+character = character("characters/testPlayer.epf") 
 
 
 def createLayout(c):
