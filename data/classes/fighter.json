@@ -1,0 +1,61 @@
+{
+  "name" : "Fighter",
+  "hitDie" : 10,
+  "subclass" : "martialArchetype",
+  "proficiencies" : {
+    "skills": [
+      2,
+      [
+        "acro",
+        "anim",
+        "athe",
+        "hist",
+        "insi",
+        "inti",
+        "perc",
+        "surv"
+      ]
+    ],
+    "savingThrows": {
+      "str" : 1,
+      "con" : 1,
+      "dex" : 0,
+      "int" : 0,
+      "wis" : 0,
+      "cha" : 0
+      },
+    "tools": [],
+    "weapons": [
+      "simple",
+      "martial"
+    ],
+    "armor": [
+      "light",
+      "medium",
+      "heavy",
+      "shields"
+    ]
+  },
+  "features" : {
+    "1" : ["fightingStyle", "secondWind"],
+    "2" : ["actionSurgeX1"],
+    "3" : ["subclass"],
+    "4" : ["asifeat", "martialVersatility"],
+    "5" : ["extraAttackX1"],
+    "6" : ["asifeat", "martialVersatility"],
+    "7" : [],
+    "8" : ["asifeat", "martialVersatility"],
+    "9" : ["indomitableX1"],
+    "10" : [],
+    "11" : ["extraAttackX2"],
+    "12" : ["asifeat", "martialVersatility"],
+    "13" : ["indomitableX2"],
+    "14" : ["asifeat", "martialVersatility"],
+    "15" : [],
+    "16" : ["asifeat", "martialVersatility"],
+    "17" : ["actionSurgeX2", "indomitableX3"],
+    "18" : [],
+    "19" : ["asifeat", "martialVersatility"],
+    "20" : ["extraAttackX3"]
+  }
+}

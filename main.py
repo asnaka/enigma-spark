@@ -1,187 +1,195 @@
-# Imports
+from colorama import Fore, Back, init
 import PySimpleGUI as sg
-from epfParser import character
+import json
+from search import searchItems
+from random import randint
 
-character = character("characters/testPlayer.epf") 
+init(autoreset=True)
 
+with open('settings.json', 'r+', encoding='utf-8') as settingsFile:
+    settings = json.load(settingsFile)
 
-def createLayout(c):
-    def createGenericInfo():
-        basic = sg.Column([
-            [
-                sg.Column([
-                    [sg.T("Name:")],
-                    [sg.T("Race:")],
-                    [sg.T("Level:")],
-                    [sg.T("Class:")]
-                ]),
-                sg.Column([
-                    [sg.T(c.name)],
-                    [sg.T(c.race + ', ' + c.subrace)],
-                    [sg.T(c.level)],
-                    [sg.T(c.job)]
-                ])
-            ]
-        ])
-        advanced = sg.Column([
-            [
-                sg.Column([
-                    [sg.T("HP:")],
-                    [sg.T("Proficiency Bonus:")],
-                    [sg.T("Armor Class")],
-                    [sg.T("Speed")]
-                ]),
-                sg.Column([
-                    [sg.Spin(values=list(range(11)), initial_value=10, s=(3, 1)), sg.T("/10")],
-                    [sg.T(c.profBon)],
-                    [sg.T("13")],
-                    [sg.T("30 f.t.")]
-                ])
-            ]
-        ])
-        generic = sg.Column([
-            [basic, advanced]
-        ])
-        return generic
+try:
+    with open('data/characters/exampleCharacter.json', 'r+', encoding='utf-8') as characterFile:
+        characterFileJSON = json.load(characterFile)
+except FileNotFoundError:
+    print("FileNotFoundError: Opening exampleCharacter")
+    with open('data/characters/exampleCharacter.json', 'r+', encoding='utf-8') as characterFile:
+        characterFileJSON = json.load(characterFile)
 
-    def createAbilityScores():
-        strScore = sg.Column([
-            [sg.T(c.strNum, font=("Arial", 14))],
-            [sg.T("STR")],
-            [sg.T(c.strMod)]
-        ], element_justification='c')
-        dexScore = sg.Column([
-            [sg.T(c.dexNum, font=("Arial", 14))],
-            [sg.T("DEX")],
-            [sg.T(c.dexMod)]
-        ], element_justification='c')
-        conScore = sg.Column([
-            [sg.T(c.conNum, font=("Arial", 14))],
-            [sg.T("CON")],
-            [sg.T(c.conMod)]
-        ], element_justification='c')
-        inteScore = sg.Column([
-            [sg.T(c.inteNum, font=("Arial", 14))],
-            [sg.T("INT")],
-            [sg.T(c.inteMod)]
-        ], element_justification='c')
-        wisScore = sg.Column([
-            [sg.T(c.wisNum, font=("Arial", 14))],
-            [sg.T("WIS")],
-            [sg.T(c.wisMod)]
-        ], element_justification='c')
-        chaScore = sg.Column([
-            [sg.T(c.chaNum, font=("Arial", 14))],
-            [sg.T("CHA")],
-            [sg.T(c.chaMod)]
-        ], element_justification='c')
-        scores = sg.Column([
-            [strScore, dexScore, conScore, inteScore, wisScore, chaScore]
-        ])
-        return scores
+class playerClass:
+    def __init__(self, name, level, subclass):
+        self.mainclass = name
+        self.classlevel = level
+        self.subclass =  subclass
+        with open(f'data/classes/{self.mainclass}.json', 'r+', encoding='utf-8') as self.classFile:
+            classdata = json.load(self.classFile)
+        self.savingThrows = classdata['proficiencies']['savingThrows']
 
-    def createCombatInfo():
-        initiative = sg.Column([
-            [sg.T("\nInitiative")],
-            [sg.T(c.dexMod, font=("Arial", 14))]
-        ], element_justification='c')
-        passPerception = sg.Column([
-            [sg.T("Passive\nPerception", justification='c')],
-            [sg.T(10 + c.percMod, font=("Arial", 14))]
-        ], element_justification='c')
-        numOfAttacks = sg.Column([
-            [sg.T("Number of\nAttacks", justification='c')],
-            [sg.T("1", font=("Arial", 14))]
-        ], element_justification='c')
-        hitDie = sg.Column([
-            [sg.T("\nHit Die")],
-            [sg.T("10d8", font=("Arial", 14))]
-        ], element_justification='c')
-        combatInfo = sg.Column([
-            [initiative, passPerception, numOfAttacks, hitDie]
-        ])
-        return combatInfo
-
-    def createSavingThrows():
+class playerSubclass:
+    def __init__(self, name, level):
         pass
 
-    profColumn = sg.Column([[sg.T("")]] + [[sg.T("[" + c.profs[i + 1] + "]")] for i in range(18)])
-    skillColumn = sg.Column([
-        [sg.T("Skill")],
-        [sg.T("Athletics")],
-        [sg.T("Acrobatics")],
-        [sg.T("Sleight of Hand")],
-        [sg.T("Stealth")],
-        [sg.T("Arcana")],
-        [sg.T("History")],
-        [sg.T("Investigation")],
-        [sg.T("Nature")],
-        [sg.T("Religion")],
-        [sg.T("Animal Handling")],
-        [sg.T("Insight")],
-        [sg.T("Medicine")],
-        [sg.T("Perception")],
-        [sg.T("Survival")],
-        [sg.T("Deception")],
-        [sg.T("Intimidation")],
-        [sg.T("Performance")],
-        [sg.T("Persuasion")]
-    ])
-    modColumn = sg.Column([
-        [sg.T("Modifier")],
-        [sg.T(c.athMod)],
-        [sg.T(c.acrMod)],
-        [sg.T(c.sohMod)],
-        [sg.T(c.steMod)],
-        [sg.T(c.arcMod)],
-        [sg.T(c.hisMod)],
-        [sg.T(c.invMod)],
-        [sg.T(c.natMod)],
-        [sg.T(c.relMod)],
-        [sg.T(c.aniMod)],
-        [sg.T(c.insMod)],
-        [sg.T(c.medMod)],
-        [sg.T(c.percMod)],
-        [sg.T(c.surMod)],
-        [sg.T(c.decMod)],
-        [sg.T(c.intiMod)],
-        [sg.T(c.perfMod)],
-        [sg.T(c.persMod)]
-    ], element_justification='c')
-    skillProf = sg.Column([
-        [profColumn, skillColumn, modColumn]
-    ])
-    asCombat = sg.Column([
-        [createAbilityScores()],
-        [createCombatInfo()]
-    ])
-    mainColumn = sg.Column([
-        [createGenericInfo()],
-        [asCombat]
+class character:
+    def __init__(self, characterData=characterFileJSON):
+        self.name = characterData['name']
+        self.level = characterData['level']
+        self.mainclass = playerClass(characterData['class'][0], characterData['class'][1], characterData['class'][2])
+        self.race = characterData['race']
+        self.description = characterData['description']
+        self.hair = self.description['hair']
+        self.eyes = self.description['eyes']
+        self.skin = self.description['skin']
+        self.height = self.description['height']
+        self.weight = self.description['weight']
+        self.sex = self.description['sex']
+        self.age = self.description['age']
+        self.traits = self.description['personalityTraits']
+        self.ideals = self.description['ideals']
+        self.bonds = self.description['bonds']
+        self.flaws = self.description['flaws']
+        self.background = self.description['background']
+        self.inventory = characterData['inventory']
+        self.scores = characterData['scores']
+        self.skillProficiencies = characterData['proficiencies']['skills']
+        self.languages = characterData['proficiencies']['languages']
+        self.calculateBasics()
 
-    ])
+    def printInventory(self, value=None):
+        inventory = []
+        for item in self.inventory:
+            itemdict = searchItems(item)
+            inventory.append(itemdict)
 
-    layout = [
-        [skillProf, mainColumn]
-    ]
-    return layout
+        for index, i in enumerate(inventory):
+            if value is not None and i is not None:
+                try:
+                    if value == 'cost':
+                        coins = ["gold", "silver", "copper"]
+                        cost = i[value]
+                        pointer = 0
+                        while int(cost) != cost:
+                            cost *= 10
+                            pointer += 1
+                        print('{}[{}] {}{} {}{} {}'.format(Fore.MAGENTA, i['name'], Fore.GREEN, value, Fore.CYAN, int(cost), coins[pointer]))
+                    else:
+                        print('{}[{}] {}{} {}{}'.format(Fore.MAGENTA, i['name'], Fore.GREEN, value, Fore.CYAN, i[value]))
+                except KeyError:
+                    print("{}{}KeyError: Value {}[{}] {}not found in item {}[{}]{}.".format(Back.BLACK, Fore.RED,
+                                                                                            Fore.CYAN, value, Fore.RED,
+                                                                                            Fore.MAGENTA, i['name'],
+                                                                                            Fore.RED))
+            elif i is None:
+                print("{}{}TypeError: Item {}[{}] {}not found.".format(Back.BLACK, Fore.RED, Fore.MAGENTA, self.inventory[index],
+                                                                       Fore.RED))
+            else:
+                print(i)
+
+    def printStats(self):
+        print(f'''
+SCORES:
+STR: {self.str}, {self.strMod}
+CON: {self.con}, {self.conMod}
+DEX: {self.dex}, {self.dexMod}
+INT: {self.int}, {self.intMod}
+WIS: {self.wis}, {self.wisMod}
+CHA: {self.cha}, {self.chaMod}
+SKILLS:
+acro: {self.acroMod}
+anim: {self.animMod}
+arca: {self.arcaMod}
+athl: {self.athlMod}
+dece: {self.deceMod}
+hist: {self.histMod}
+insi: {self.insiMod}
+inti: {self.intiMod}
+inve: {self.inveMod}
+medi: {self.mediMod}
+natu: {self.natuMod}
+perc: {self.percMod}
+perf: {self.perfMod}
+pers: {self.persMod}
+reli: {self.reliMod}
+slei: {self.sleiMod}
+stea: {self.steaMod}
+surv: {self.survMod}
+SAVING THROWS
+STR: {self.strSave}
+CON: {self.conSave}
+DEX: {self.dexSave}
+INT: {self.intSave}
+WIS: {self.wisSave}
+CHA: {self.chaSave}
+            ''')
+
+    def calculateBasics(self):
+        # Proficiency modifier
+        self.profMod = int(2 + (self.level-1)/4)
+        # Ability scores
+        self.str = self.scores['str']
+        self.strMod = (self.str - 10) // 2
+        self.con = self.scores['con']
+        self.conMod = (self.con - 10) // 2
+        self.dex = self.scores['dex']
+        self.dexMod = (self.dex - 10) // 2
+        self.int = self.scores['int']
+        self.intMod = (self.int - 10) // 2
+        self.wis = self.scores['wis']
+        self.wisMod = (self.wis - 10) // 2
+        self.cha = self.scores['cha']
+        self.chaMod = (self.cha - 10) // 2
+
+        # Skill proficiencies
+        self.acroMod = self.dexMod + (self.profMod * self.skillProficiencies['acro'])
+        self.animMod = self.wisMod + (self.profMod * self.skillProficiencies['anim'])
+        self.arcaMod = self.intMod + (self.profMod * self.skillProficiencies['arca'])
+        self.athlMod = self.strMod + (self.profMod * self.skillProficiencies['athl'])
+        self.deceMod = self.chaMod + (self.profMod * self.skillProficiencies['dece'])
+        self.histMod = self.intMod + (self.profMod * self.skillProficiencies['hist'])
+        self.insiMod = self.wisMod + (self.profMod * self.skillProficiencies['insi'])
+        self.intiMod = self.chaMod + (self.profMod * self.skillProficiencies['inti'])
+        self.inveMod = self.intMod + (self.profMod * self.skillProficiencies['inve'])
+        self.mediMod = self.wisMod + (self.profMod * self.skillProficiencies['medi'])
+        self.natuMod = self.intMod + (self.profMod * self.skillProficiencies['natu'])
+        self.percMod = self.wisMod + (self.profMod * self.skillProficiencies['perc'])
+        self.perfMod = self.chaMod + (self.profMod * self.skillProficiencies['perf'])
+        self.persMod = self.chaMod + (self.profMod * self.skillProficiencies['pers'])
+        self.reliMod = self.intMod + (self.profMod * self.skillProficiencies['reli'])
+        self.sleiMod = self.dexMod + (self.profMod * self.skillProficiencies['slei'])
+        self.steaMod = self.dexMod + (self.profMod * self.skillProficiencies['stea'])
+        self.survMod = self.wisMod + (self.profMod * self.skillProficiencies['surv'])
+        # Saving throws
+        self.strSave = self.strMod + (self.profMod * self.mainclass.savingThrows['str'])
+        self.conSave = self.conMod + (self.profMod * self.mainclass.savingThrows['con'])
+        self.dexSave = self.dexMod + (self.profMod * self.mainclass.savingThrows['dex'])
+        self.intSave = self.intMod + (self.profMod * self.mainclass.savingThrows['int'])
+        self.wisSave = self.wisMod + (self.profMod * self.mainclass.savingThrows['wis'])
+        self.chaSave = self.chaMod + (self.profMod * self.mainclass.savingThrows['cha'])
 
 
 class frame:
-    def __init__(self, windowName, layout):
-        self.windowName = windowName
-        self.layout = layout
+    def __init__(self, character):
+        self.testText = sg.T(key='testT')
+        self.testButton = sg.B("testB")
+        self.layout = [
+            [self.testText],
+            [self.testButton]
+        ]
+        self.window = sg.Window("Test", self.layout, finalize=True)
+        self.character = character
 
-    def createWindow(self):
-        newWindow = sg.Window(self.windowName, self.layout)
-        return newWindow
 
+character = character()
+windowFrame = frame(character)
+window = windowFrame.window
 
-if __name__ == '__main__':
-    window = frame("Character Viewer - {}".format(character.name), createLayout(character)).createWindow()
-    while True:
-        event, values = window.read()
-        if event == sg.WIN_CLOSED:
-            break
+while True:
+    event, values = window.read()
+    if event == sg.WIN_CLOSED:
+        break
+    if event == 'testB':
+        character.printStats()
 
 window.close()
+characterFile.close()
+character.mainclass.classFile.close()

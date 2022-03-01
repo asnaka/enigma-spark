@@ -1,0 +1,76 @@
+{
+  "name" : "Example Character",
+  "level" : 10,
+  "class" : ["fighter", 10, "champion"],
+  "race" : ["Human", "Calishite"],
+  "scores" : {
+    "str" : 15,
+    "dex" : 14,
+    "con" : 13,
+    "int" : 12,
+    "wis" : 10,
+    "cha" : 8
+  },
+  "proficiencies" : {
+    "skills" : {
+      "acro" : 0,
+      "anim" : 0,
+      "arca" : 0,
+      "athl" : 1,
+      "dece" : 0,
+      "hist" : 0,
+      "insi" : 1,
+      "inti" : 1,
+      "inve" : 0,
+      "medi" : 0,
+      "natu" : 0,
+      "perc" : 0,
+      "perf" : 0,
+      "pers" : 0,
+      "reli" : 1,
+      "slei" : 0,
+      "stea" : 0,
+      "surv" : 0
+    },
+    "languages": [
+      "common",
+      "draconic",
+      "halfling",
+      "infernal"
+    ]
+  },
+  "description" : {
+    "hair" : "some color",
+    "eyes" : "some other color",
+    "skin" : "some other other color",
+    "height" : [5,7],
+    "weight" : 150,
+    "sex" : "male",
+    "age" : 20,
+    "personalityTraits" : [
+      "no personality",
+      "boring as hell"
+    ],
+    "ideals" : [],
+    "bonds" : [],
+    "flaws" : [],
+    "background" : "Some interesting and long backstory."
+  },
+  "inventory" : [
+    "Dragon Slayer, Greatsword",
+    "Sling",
+    "skudyfsdf",
+    "Longbow",
+    "sdjfhkjsdf",
+    "Dart"
+  ],
+  "choices" : {
+    "fightingStyle" : [
+      "archery",
+      "greatWeaponFighting"
+    ],
+    "feats" : [
+      "grappler"
+    ]
+  }
+}
