@@ -169,15 +169,25 @@ CHA: {self.chaSave}
 
 class frame:
     def __init__(self, character):
-        self.testText = sg.T(key='testT')
-        self.testButton = sg.B("testB")
-        self.layout = [
-            [self.testText],
-            [self.testButton]
-        ]
-        self.window = sg.Window("Test", self.layout, finalize=True)
         self.character = character
+        self.window = sg.Window("Test", self.createLayout(), finalize=True)
 
+    def createLayout(self):
+        testText = self.createScoreBlock(self.character.str, self.character.strMod)
+        testButton = sg.B("testB")
+        layout = [
+            [testText],
+            [testButton]
+        ]
+        return layout
+
+    @staticmethod
+    def createScoreBlock(score, mod):
+        block = sg.Column([
+            [sg.T(f'[{score}]', font=('Arial', 15))],
+            [sg.T(f'+{mod}' if str(mod)[0] != '-' else f'{mod}', font=('Arial', 12))]
+            ], element_justification='center')
+        return block
 
 character = character()
 windowFrame = frame(character)
