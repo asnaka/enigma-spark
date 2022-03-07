@@ -1,0 +1,65 @@
+{
+  "secondWind" : {
+    "name" : "Second Wind",
+    "description" : "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level.\n\nOnce you use this feature, you must finish a short or long rest before you can use it again.",
+    "uses" : 1,
+    "cooldown" : ["shortRest", 1]
+  },
+  "actionSurgeX1" : {
+    "name" : "Action Surge",
+    "description" : "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.\n\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.",
+    "uses" : 1,
+    "cooldown" : ["shortRest", 1]
+  },
+  "actionSurgeX2" : {
+    "name" : "Action Surge",
+    "description" : "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.\n\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.",
+    "uses" : 2,
+    "cooldown" : ["shortRest", 1]
+  },
+  "extraAttackX1" : {
+    "name" : "Extra Attack",
+    "description" : "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.\n\nThe number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
+    "value" : 1
+  },
+  "extraAttackX2" : {
+    "name" : "Extra Attack",
+    "description" : "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.\n\nThe number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
+    "value" : 2
+  },
+  "extraAttackX3" : {
+    "name" : "Extra Attack",
+    "description" : "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn.\n\nThe number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
+    "value" : 3
+  },
+  "indomitableX1" : {
+    "name" : "Indomitable",
+    "description" : "\nBeginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.\n\nYou can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.",
+    "uses" : 1,
+    "cooldown" : ["longRest", 1]
+  },
+  "indomitableX2" : {
+    "name" : "Indomitable",
+    "description" : "\nBeginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.\n\nYou can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.",
+    "uses" : 2,
+    "cooldown" : ["longRest", 1]
+  },
+  "indomitableX3" : {
+    "name" : "Indomitable",
+    "description" : "\nBeginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.\n\nYou can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.",
+    "uses" : 3,
+    "cooldown" : ["longRest", 1]
+  },
+  "asifeat" : {
+    "choice" : true,
+    "optional" : false,
+    "choices" : 1,
+    "choicesList" : ["asi", "feat"]
+  },
+  "martialVersatility" : {
+    "choice" : true,
+    "optional" : true,
+    "choices" : 1,
+    "choicesList" : ["fightingStyle"]
+  }
+}

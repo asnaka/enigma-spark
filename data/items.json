@@ -1,0 +1,464 @@
+{
+  "weapons" : {
+    "martial" : {
+      "melee" : [
+        {
+          "name" : "Battleaxe",
+          "cost" : 10,
+          "damage" : [1, 8, "slashing", 1, 10, "slashing"],
+          "weight" : 4,
+          "properties": [
+            "Versatile"
+          ]
+        },
+        {
+          "name" : "Flail",
+          "cost" : 10,
+          "damage" : [1, 8, "bludgeoning"],
+          "weight" : 2,
+          "properties": []
+        },
+        {
+          "name" : "Glaive",
+          "cost" : 20,
+          "damage" : [1, 10, "slashing"],
+          "weight" : 6,
+          "properties": [
+            "heavy",
+            "reach",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Greataxe",
+          "cost" : 30,
+          "damage" : [1, 12, "slashing"],
+          "weight" : 7,
+          "properties": [
+            "heavy",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Greatsword",
+          "cost" : 50,
+          "damage" : [2, 6, "slashing"],
+          "weight" : 6,
+          "properties": [
+            "heavy",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Halberd",
+          "cost" : 20,
+          "damage" : [1, 10, "slashing"],
+          "weight" : 6,
+          "properties": [
+            "heavy",
+            "reach",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Lance",
+          "cost" : 10,
+          "damage" : [1, 12, "piercing"],
+          "weight" : 6,
+          "properties": [
+            "reach",
+            "special"
+          ]
+        },
+        {
+          "name" : "Longsword",
+          "cost" : 15,
+          "damage" : [1, 8, "slashing", 1, 10, "slashing"],
+          "weight" : 3,
+          "properties": [
+            "versatile"
+          ]
+        },
+        {
+          "name" : "Maul",
+          "cost" : 10,
+          "damage" : [2, 6, "bludgeoning"],
+          "weight" : 10,
+          "properties": [
+            "heavy",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Morningstar",
+          "cost" : 15,
+          "damage" : [1, 8, "piercing"],
+          "weight" : 4,
+          "properties": []
+        },
+        {
+          "name" : "Pike",
+          "cost" : 5,
+          "damage" : [1, 10, "piercing"],
+          "weight" : 18,
+          "properties": [
+            "heavy",
+            "reach",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Rapier",
+          "cost" : 25,
+          "damage" : [1, 8, "piercing"],
+          "weight" : 2,
+          "properties": [
+            "finesse"
+          ]
+        },
+        {
+          "name" : "Scimitar",
+          "cost" : 25,
+          "damage" : [1, 6, "slashing"],
+          "weight" : 3,
+          "properties": [
+            "finesse",
+            "light"
+          ]
+        },
+        {
+          "name" : "Shortsword",
+          "cost" : 10,
+          "damage" : [1, 6, "piercing"],
+          "weight" : 2,
+          "properties": [
+            "finesse",
+            "light"
+          ]
+        },
+        {
+          "name" : "Trident",
+          "cost" : 5,
+          "damage" : [1, 6, "piercing", 1, 8, "piercing"],
+          "weight" : 4,
+          "range" : [20, 60],
+          "properties": [
+            "thrown",
+            "versatile"
+          ]
+        },
+        {
+          "name" : "War pick",
+          "cost" : 5,
+          "damage" : [1, 8, "piercing"],
+          "weight" : 2,
+          "properties": []
+        },
+        {
+          "name" : "Warhammer",
+          "cost" : 15,
+          "damage" : [1, 8, "bludgeoning", 1, 10, "bludgeoning"],
+          "weight" : 2,
+          "properties": [
+            "versatile"
+          ]
+        },
+        {
+          "name" : "Whip",
+          "cost" : 2,
+          "damage" : [1, 4, "slashing"],
+          "weight" : 3,
+          "properties": [
+            "finesse",
+            "reach"
+          ]
+        }
+      ],
+      "ranged" : [
+        {
+          "name" : "Blowgun",
+          "cost" : 10,
+          "damage" : [1, 1, "piercing"],
+          "weight" : 1,
+          "range" : [25, 100],
+          "properties": [
+            "ammunition",
+            "loading"
+          ]
+        },
+        {
+          "name" : "Crossbow, hand",
+          "cost" : 75,
+          "damage" : [1, 6, "piercing"],
+          "weight" : 3,
+          "range" : [30, 120],
+          "properties": [
+            "ammunition",
+            "light",
+            "loading"
+          ]
+        },
+        {
+          "name" : "Crossbow, heavy",
+          "cost" : 50,
+          "damage" : [1, 10, "piercing"],
+          "weight" : 18,
+          "range" : [100, 400],
+          "properties": [
+            "ammunition",
+            "heavy",
+            "loading",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Longbow",
+          "cost" : 50,
+          "damage" : [1, 8, "piercing"],
+          "weight" : 2,
+          "range" : [150, 600],
+          "properties": [
+            "ammunition",
+            "heavy",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Net",
+          "cost" : 1,
+          "damage" : [0, 0, ""],
+          "weight" : 3,
+          "range" : [5, 15],
+          "properties": [
+            "special",
+            "thrown"
+          ]
+        }
+      ]
+    },
+    "simple" : {
+      "melee" : [
+        {
+          "name" : "Club",
+          "cost" : 0.1,
+          "damage" : [1, 4, "bludgeoning"],
+          "weight" : 2,
+          "properties": [
+            "light"
+          ]
+        },
+        {
+          "name" : "Dagger",
+          "cost" : 2,
+          "damage" : [1, 4, "piercing"],
+          "weight" : 1,
+          "range" : [20, 60],
+          "properties": [
+            "finesse",
+            "light",
+            "thrown"
+          ]
+        },
+        {
+          "name" : "Greatclub",
+          "cost" : 0.2,
+          "damage" : [1, 8, "bludgeoning"],
+          "weight" : 10,
+          "properties": [
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Handaxe",
+          "cost" : 5,
+          "damage" : [1, 6, "slashing"],
+          "weight" : 2,
+          "range" : [20, 60],
+          "properties": [
+            "light",
+            "thrown"
+          ]
+        },
+        {
+          "name" : "Javelin",
+          "cost" : 0.5,
+          "damage" : [1, 6, "piercing"],
+          "weight" : 1,
+          "range" : [30, 120],
+          "properties": [
+            "thrown"
+          ]
+        },
+        {
+          "name" : "Light Hammer",
+          "cost" : 2,
+          "damage" : [1, 4, "bludgeoning"],
+          "weight" : 2,
+          "properties": [
+            "light",
+            "thrown"
+          ]
+        },
+        {
+          "name" : "Mace",
+          "cost" : 5,
+          "damage" : [1, 6, "bludgeoning"],
+          "weight" : 4,
+          "properties": []
+        },
+        {
+          "name" : "Quarterstaff",
+          "cost" : 0.2,
+          "damage" : [1, 6, "bludgeoning", 1, 8, "bludgeoning"],
+          "weight" : 1,
+          "properties": [
+            "versatile"
+          ]
+        },
+        {
+          "name" : "Sickle",
+          "cost" : 1,
+          "damage" : [1, 4, "slashing"],
+          "weight" : 2,
+          "properties": [
+            "light"
+          ]
+        },
+        {
+          "name" : "Spear",
+          "cost" : 1,
+          "damage" : [1, 6, "piercing", 1, 8, "piercing"],
+          "weight" : 3,
+          "range" : [20, 60],
+          "properties": [
+            "thrown",
+            "versatile"
+          ]
+        }
+      ],
+      "ranged" : [
+        {
+          "name" : "Crossbow, light",
+          "cost" : 25,
+          "damage" : [1, 8, "piercing"],
+          "weight" : 5,
+          "range" : [80, 320],
+          "properties": [
+            "ammunition",
+            "loading",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Dart",
+          "cost" : 0.05,
+          "damage" : [1, 4, "piercing"],
+          "weight" : 0.25,
+          "range" : [20, 60],
+          "properties": [
+            "finesse",
+            "thrown"
+          ]
+        },
+        {
+          "name" : "Shortbow",
+          "cost" : 25,
+          "damage" : [1, 6, "piercing"],
+          "weight" : 2,
+          "range" : [80, 320],
+          "properties": [
+            "ammunition",
+            "twoHanded"
+          ]
+        },
+        {
+          "name" : "Sling",
+          "cost" : 0.1,
+          "damage" : [1, 4, "bludgeoning"],
+          "weight" : 0,
+          "range" : [30, 120],
+          "properties": [
+            "ammunition"
+          ]
+        }
+      ]
+    },
+    "magic" : {
+      "melee" : [
+       {
+        "name" : "Dragon Slayer, Greatsword",
+        "cost" : 7000,
+        "damage" : [2, 6, "slashing"],
+        "weight" : 6,
+        "bonus" : 1,
+        "description" : "You gain a +1 bonus to attack and damage rolls made with this magic weapon.\n\nWhen you hit a dragon with this weapon, the dragon takes an extra 3d6 damage of the weapon’s type. For the purpose of this weapon, “dragon” refers to any creature with the dragon type, including dragon turtles and wyverns.",
+        "properties": [
+          "heavy",
+          "twoHanded"
+        ]
+       },
+       {
+        "name" : "Dragon Slayer, Longsword",
+        "cost" : 7000,
+        "damage" : [1, 8, "slashing", 1, 10, "slashing"],
+        "weight" : 3,
+        "bonus" : 1,
+        "description" : "You gain a +1 bonus to attack and damage rolls made with this magic weapon.\n\nWhen you hit a dragon with this weapon, the dragon takes an extra 3d6 damage of the weapon’s type. For the purpose of this weapon, “dragon” refers to any creature with the dragon type, including dragon turtles and wyverns.",
+        "properties": [
+          "versatile"
+          ]
+        },
+       {
+        "name" : "Dragon Slayer, Rapier",
+        "cost" : 7000,
+        "damage" : [1, 8, "piercing"],
+        "weight" : 2,
+        "bonus" : 1,
+        "description" : "You gain a +1 bonus to attack and damage rolls made with this magic weapon.\n\nWhen you hit a dragon with this weapon, the dragon takes an extra 3d6 damage of the weapon’s type. For the purpose of this weapon, “dragon” refers to any creature with the dragon type, including dragon turtles and wyverns.",
+        "properties": [
+          "finesse"
+        ]
+       },
+       {
+        "name" : "Dragon SLayer, Scimitar",
+        "cost" : 7000,
+        "damage" : [1, 6, "slashing"],
+        "weight" : 3,
+        "bonus" : 1,
+        "description" : "You gain a +1 bonus to attack and damage rolls made with this magic weapon.\n\nWhen you hit a dragon with this weapon, the dragon takes an extra 3d6 damage of the weapon’s type. For the purpose of this weapon, “dragon” refers to any creature with the dragon type, including dragon turtles and wyverns.",
+        "properties": [
+          "finesse",
+          "light"
+        ]
+       },
+       {
+        "name" : "Dragon Slayer, Shortsword",
+        "cost" : 7000,
+        "damage" : [1, 6, "piercing"],
+        "weight" : 2,
+        "bonus" : 1,
+        "description" : "You gain a +1 bonus to attack and damage rolls made with this magic weapon.\n\nWhen you hit a dragon with this weapon, the dragon takes an extra 3d6 damage of the weapon’s type. For the purpose of this weapon, “dragon” refers to any creature with the dragon type, including dragon turtles and wyverns.",
+        "properties": [
+          "finesse",
+          "light"
+        ]
+       },
+       {
+        "name" : "Berserker Axe, Battleaxe",
+        "cost" : 10,
+        "damage" : [1, 8, "slashing", 1, 10, "slashing"],
+        "weight" : 4,
+        "properties": [
+          "Versatile",
+          "Cursed"
+        ]
+       }
+      ]
+    }
+  },
+  "tools" : [
+    {
+    "name" : "Woodworking kit"
+  }
+  ]
+}
