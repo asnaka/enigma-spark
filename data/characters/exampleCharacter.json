@@ -64,6 +64,12 @@
     "sdjfhkjsdf",
     "Dart"
   ],
+  "equipped" : {
+    "armour" : null,
+    "shield" : null,
+    "mainHand" : null, 
+    "offHand" : null
+  },
   "choices" : {
     "fightingStyle" : [
       "archery",

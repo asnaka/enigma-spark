@@ -26,6 +26,7 @@ class PlayerClass:
         with open(f'data/classes/{self.name}.json', 'r+', encoding='utf-8') as self.classFile:
             classdata = json.load(self.classFile)
         self.savingThrows = classdata['proficiencies']['savingThrows']
+        self.hitdie = classdata['hitDie']
 
 class PlayerSubclass:
     def __init__(self, name, level):
@@ -36,6 +37,7 @@ class Character:
         self.name = characterData['name']
         self.level = characterData['level']
         self.mainclass = PlayerClass(characterData['class'][0], characterData['class'][1], characterData['class'][2])
+        self.hitDice = f'{self.mainclass.classlevel}d{self.mainclass.hitdie}'
         self.race = characterData['race']
         self.description = characterData['description']
         self.hair = self.description['hair']
@@ -54,6 +56,7 @@ class Character:
         self.scores = characterData['scores']
         self.skillProficiencies = characterData['proficiencies']['skills']
         self.languages = characterData['proficiencies']['languages']
+        self.equipped = characterData['equipped']
         self.calculateBasics()
 
     def printInventory(self, value=None):
@@ -62,29 +65,29 @@ class Character:
             itemdict = searchItems(item)
             inventory.append(itemdict)
 
-        for index, i in enumerate(inventory):
-            if value is not None and i is not None:
+        for index, item in enumerate(inventory):
+            if value is not None and item is not None:
                 try:
                     if value == 'cost':
                         coins = ["gold", "silver", "copper"]
-                        cost = i[value]
+                        cost = item[value]
                         pointer = 0
                         while int(cost) != cost:
                             cost *= 10
                             pointer += 1
-                        print('{}[{}] {}{} {}{} {}'.format(Fore.MAGENTA, i['name'], Fore.GREEN, value, Fore.CYAN, int(cost), coins[pointer]))
+                        print('{}[{}] {}{} {}{} {}'.format(Fore.MAGENTA, item['name'], Fore.GREEN, value, Fore.CYAN, int(cost), coins[pointer]))
                     else:
-                        print('{}[{}] {}{} {}{}'.format(Fore.MAGENTA, i['name'], Fore.GREEN, value, Fore.CYAN, i[value]))
+                        print('{}[{}] {}{} {}{}'.format(Fore.MAGENTA, item['name'], Fore.GREEN, value, Fore.CYAN, item[value]))
                 except KeyError:
                     print("{}{}KeyError: Value {}[{}] {}not found in item {}[{}]{}.".format(Back.BLACK, Fore.RED,
                                                                                             Fore.CYAN, value, Fore.RED,
-                                                                                            Fore.MAGENTA, i['name'],
+                                                                                            Fore.MAGENTA, item['name'],
                                                                                             Fore.RED))
-            elif i is None:
+            elif item is None:
                 print("{}{}TypeError: Item {}[{}] {}not found.".format(Back.BLACK, Fore.RED, Fore.MAGENTA, self.inventory[index],
                                                                        Fore.RED))
             else:
-                print(i)
+                print(item)
 
     def calculateBasics(self):
         # Proficiency modifier
@@ -136,17 +139,26 @@ class CharacterViewer:
         self.window = sg.Window(f'{self.character.name} | {self.character.mainclass.name.capitalize()}, {self.character.mainclass.classlevel}', self.createLayout(), finalize=True, resizable=True,margins=(0,0))
 
     def createLayout(self):
+        # Main left column
         self.scoreCol = self.createScoreCol()
         self.basicInfo = self.createBasicInfo()
         self.skillBlock = self.createSkillBlock()
         self.buttons = self.createButtons()
         self.descBar = self.createDescriptorBar()
+        self.savesBlock = self.createSavingBlock()
+        self.skillsaves = [sg.Column([[self.skillBlock,sg.VerticalSeparator(),self.savesBlock]])]
         self.leftCol = sg.Column([
                 self.scoreCol,[sg.HorizontalSeparator()],
                 self.basicInfo,[sg.HorizontalSeparator()],
-                self.skillBlock], element_justification='center', scrollable=True, vertical_scroll_only=True, expand_y=True)
+                self.skillsaves], element_justification='center', scrollable=True, vertical_scroll_only=True, expand_y=True)
+        
+        # Combat block
+        self.combatBlock = self.createCombatBlock()
+
+        # Assemble middle/right column
         self.midCol = sg.Column([
-            self.buttons, [sg.HorizontalSeparator()]], vertical_alignment='top')
+            self.buttons,[self.combatBlock]], vertical_alignment='top')
+
         layout = [
             [sg.HorizontalSeparator()],
             self.descBar,
@@ -154,6 +166,57 @@ class CharacterViewer:
             [sg.Column([[self.leftCol, self.midCol]], expand_y=True)]
         ]
         return layout
+
+    def createCombatBlock(self):
+        # Basic combat info
+        self.combatArmourBlock = sg.Column([
+            [sg.T('Armour Class', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.T(f'{self.character.percMod}', font=('Arial', 13, 'bold'), pad=(3,0))]], element_justification='center')
+        self.combatHPBlock = sg.Column([
+            [sg.T('Max Hit Points', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.T(f'{self.character.percMod}', font=('Arial', 13, 'bold'), pad=(3,0))]], element_justification='center')
+        self.combatSpeedBlock = sg.Column([
+            [sg.T('Speed', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.T(f'{30} ft.', font=('Arial', 13, 'bold'), pad=(3,0))]], element_justification='center')
+        self.combatInitiativeBlock = sg.Column([
+            [sg.T('Initiative', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.T(f'+{self.character.dexMod}', font=('Arial', 13, 'bold'), pad=(3,0))]], element_justification='center')
+        self.combatCriticalBlock = sg.Column([
+            [sg.T('Critical Hits', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.T(f'{20}', font=('Arial', 13, 'bold'), pad=(3,0))]], element_justification='center')
+        self.combatHitDice = sg.Column([
+            [sg.T('Hit Dice', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.T(f'{self.character.hitDice}', font=('Arial', 13, 'bold'), pad=(3,0))]], element_justification='center')
+        self.combatAttackNumber = sg.Column([
+            [sg.T('Number of Attacks', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.T(f'{2}', font=('Arial', 13, 'bold'), pad=(3,0))]], element_justification='center')
+        
+        self.combatInfo = sg.Column([[sg.Column([[self.combatArmourBlock],[self.combatCriticalBlock]], element_justification='center'),sg.Column([[self.combatHPBlock], [self.combatHitDice]], element_justification='center'), sg.Column([[self.combatSpeedBlock, self.combatInitiativeBlock], [self.combatAttackNumber]], element_justification='center')]])
+        
+        # Equipped items
+        self.combatWornArmour = sg.Column([
+            [sg.T('Worn Armour', font=('Arial', 9, 'bold'), pad=(3,0))],
+            [sg.T(f"{self.character.equipped['armour']}")]], element_justification='center')
+        self.combatWieldedShield = sg.Column([
+            [sg.T('Wielded Shield', font=('Arial', 9, 'bold'), pad=(3,0))],
+            [sg.T(f"{self.character.equipped['shield']}")]], element_justification='center')
+        self.combatMainHand = sg.Column([
+            [sg.T('Main Hand Weapon', font=('Arial', 9, 'bold'), pad=(3,0))],
+            [sg.T(f"{self.character.equipped['mainHand']}")]], element_justification='center')
+        self.combatOffHand = sg.Column([
+            [sg.T('Off Hand Weapon', font=('Arial', 9, 'bold'), pad=(3,0))],
+            [sg.T(f"{self.character.equipped['offHand']}")]], element_justification='center', visible=False)
+        self.combatItems = sg.Column([
+            [sg.T('Equipped Items', font=('Arial', 10, 'bold'), pad=(3,0))],
+            [sg.HorizontalSeparator()],
+            [self.combatWornArmour, self.combatWieldedShield],
+            [self.combatMainHand, self.combatOffHand]])
+        
+        return sg.Column([
+            [sg.HorizontalSeparator()],
+            [self.combatInfo],
+            [sg.HorizontalSeparator()],
+            [self.combatItems]])
 
     def createScoreCol(self):
         strBlock = self.createScoreBlock(self.character.str, self.character.strMod, 'STR')
@@ -233,12 +296,29 @@ class CharacterViewer:
 
         block = sg.Column([
             [sg.T('Skills', font=('Arial', 11, 'bold'))], [sg.HorizontalSeparator()],[profs, names, mods]], element_justification='center')
-        return [block]
+        return block
 
-    # WHY DOES THIS NOT WORK
-    # def createSavingBlock(self):
-    #     block = sg.Column([[sg.T('Strength')]])
-    #     return block
+    def createSavingBlock(self):
+        names = sg.Column([
+            [sg.T('Strength')],
+            [sg.T('Dexterity')],
+            [sg.T('Constitution')],
+            [sg.T('Intelligence')],
+            [sg.T('Wisdom')],
+            [sg.T('Charisma')]])
+        mods = sg.Column([
+            [sg.T(f'+{self.character.strSave}' if self.character.strSave > 0 else f'{self.character.strSave}')],
+            [sg.T(f'+{self.character.dexSave}' if self.character.dexSave > 0 else f'{self.character.dexSave}')],
+            [sg.T(f'+{self.character.conSave}' if self.character.conSave > 0 else f'{self.character.conSave}')],
+            [sg.T(f'+{self.character.intSave}' if self.character.intSave > 0 else f'{self.character.intSave}')],
+            [sg.T(f'+{self.character.wisSave}' if self.character.wisSave > 0 else f'{self.character.wisSave}')],
+            [sg.T(f'+{self.character.chaSave}' if self.character.chaSave > 0 else f'{self.character.chaSave}')]
+            ])
+        block = sg.Column([
+            [sg.T('Saving Throws', font=('Arial', 11, 'bold'))],
+            [sg.HorizontalSeparator()],
+            [names,mods]], vertical_alignment='top')
+        return block
 
     def createButtons(self):
         buttons = sg.Column([
