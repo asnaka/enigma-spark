@@ -1,6 +1,7 @@
 from colorama import Fore, Back, init
 import PySimpleGUI as sg
 import json, pyautogui
+import roller
 from search import searchItems
 from random import randint
 
@@ -273,24 +274,24 @@ class CharacterViewer:
             [sg.T('Survival')]])
 
         mods = sg.Column([
-            [sg.T(f'+{self.character.acroMod}' if self.character.acroMod > 0 else f'{self.character.acroMod}' if self.character.acroMod < 0 else f' {self.character.acroMod}')],
-            [sg.T(f'+{self.character.animMod}' if self.character.animMod > 0 else f'{self.character.animMod}' if self.character.animMod < 0 else f' {self.character.animMod}')],
-            [sg.T(f'+{self.character.arcaMod}' if self.character.arcaMod > 0 else f'{self.character.arcaMod}' if self.character.arcaMod < 0 else f' {self.character.arcaMod}')],
-            [sg.T(f'+{self.character.athlMod}' if self.character.athlMod > 0 else f'{self.character.athlMod}' if self.character.athlMod < 0 else f' {self.character.athlMod}')],
-            [sg.T(f'+{self.character.deceMod}' if self.character.deceMod > 0 else f'{self.character.deceMod}' if self.character.deceMod < 0 else f' {self.character.deceMod}')],
-            [sg.T(f'+{self.character.histMod}' if self.character.histMod > 0 else f'{self.character.histMod}' if self.character.histMod < 0 else f' {self.character.histMod}')],
-            [sg.T(f'+{self.character.insiMod}' if self.character.insiMod > 0 else f'{self.character.insiMod}' if self.character.insiMod < 0 else f' {self.character.insiMod}')],
-            [sg.T(f'+{self.character.intiMod}' if self.character.intiMod > 0 else f'{self.character.intiMod}' if self.character.intiMod < 0 else f' {self.character.intiMod}')],
-            [sg.T(f'+{self.character.inveMod}' if self.character.inveMod > 0 else f'{self.character.inveMod}' if self.character.inveMod < 0 else f' {self.character.inveMod}')],
-            [sg.T(f'+{self.character.mediMod}' if self.character.mediMod > 0 else f'{self.character.mediMod}' if self.character.mediMod < 0 else f' {self.character.mediMod}')],
-            [sg.T(f'+{self.character.natuMod}' if self.character.natuMod > 0 else f'{self.character.natuMod}' if self.character.natuMod < 0 else f' {self.character.natuMod}')],
-            [sg.T(f'+{self.character.percMod}' if self.character.percMod > 0 else f'{self.character.percMod}' if self.character.percMod < 0 else f' {self.character.percMod}')],
-            [sg.T(f'+{self.character.perfMod}' if self.character.perfMod > 0 else f'{self.character.perfMod}' if self.character.perfMod < 0 else f' {self.character.perfMod}')],
-            [sg.T(f'+{self.character.persMod}' if self.character.persMod > 0 else f'{self.character.persMod}' if self.character.persMod < 0 else f' {self.character.persMod}')],
-            [sg.T(f'+{self.character.reliMod}' if self.character.reliMod > 0 else f'{self.character.reliMod}' if self.character.reliMod < 0 else f' {self.character.reliMod}')],
-            [sg.T(f'+{self.character.sleiMod}' if self.character.sleiMod > 0 else f'{self.character.sleiMod}' if self.character.sleiMod < 0 else f' {self.character.sleiMod}')],
-            [sg.T(f'+{self.character.steaMod}' if self.character.steaMod > 0 else f'{self.character.steaMod}' if self.character.steaMod < 0 else f' {self.character.steaMod}')],
-            [sg.T(f'+{self.character.survMod}' if self.character.survMod > 0 else f'{self.character.survMod}' if self.character.survMod < 0 else f' {self.character.survMod}')]], 
+            [sg.T(f'+{self.character.acroMod}' if self.character.acroMod > 0 else f'{self.character.acroMod}' if self.character.acroMod < 0 else f' {self.character.acroMod}', right_click_menu = ['acroMod', ['acro | Advantage','acro | Flat','acro | Disadvantage']])],
+            [sg.T(f'+{self.character.animMod}' if self.character.animMod > 0 else f'{self.character.animMod}' if self.character.animMod < 0 else f' {self.character.animMod}', right_click_menu = ['animMod', ['anim | Advantage','anim | Flat','anim | Disadvantage']])],
+            [sg.T(f'+{self.character.arcaMod}' if self.character.arcaMod > 0 else f'{self.character.arcaMod}' if self.character.arcaMod < 0 else f' {self.character.arcaMod}', right_click_menu = ['arcaMod', ['arca | Advantage','arca | Flat','arca | Disadvantage']])],
+            [sg.T(f'+{self.character.athlMod}' if self.character.athlMod > 0 else f'{self.character.athlMod}' if self.character.athlMod < 0 else f' {self.character.athlMod}', right_click_menu = ['athlMod', ['athl | Advantage','athl | Flat','athl | Disadvantage']])],
+            [sg.T(f'+{self.character.deceMod}' if self.character.deceMod > 0 else f'{self.character.deceMod}' if self.character.deceMod < 0 else f' {self.character.deceMod}', right_click_menu = ['deceMod', ['dece | Advantage','dece | Flat','dece | Disadvantage']])],
+            [sg.T(f'+{self.character.histMod}' if self.character.histMod > 0 else f'{self.character.histMod}' if self.character.histMod < 0 else f' {self.character.histMod}', right_click_menu = ['histMod', ['hist | Advantage','hist | Flat','hist | Disadvantage']])],
+            [sg.T(f'+{self.character.insiMod}' if self.character.insiMod > 0 else f'{self.character.insiMod}' if self.character.insiMod < 0 else f' {self.character.insiMod}', right_click_menu = ['insiMod', ['insi | Advantage','insi | Flat','insi | Disadvantage']])],
+            [sg.T(f'+{self.character.intiMod}' if self.character.intiMod > 0 else f'{self.character.intiMod}' if self.character.intiMod < 0 else f' {self.character.intiMod}', right_click_menu = ['intiMod', ['inti | Advantage','inti | Flat','inti | Disadvantage']])],
+            [sg.T(f'+{self.character.inveMod}' if self.character.inveMod > 0 else f'{self.character.inveMod}' if self.character.inveMod < 0 else f' {self.character.inveMod}', right_click_menu = ['inveMod', ['inve | Advantage','inve | Flat','inve | Disadvantage']])],
+            [sg.T(f'+{self.character.mediMod}' if self.character.mediMod > 0 else f'{self.character.mediMod}' if self.character.mediMod < 0 else f' {self.character.mediMod}', right_click_menu = ['mediMod', ['medi | Advantage','medi | Flat','medi | Disadvantage']])],
+            [sg.T(f'+{self.character.natuMod}' if self.character.natuMod > 0 else f'{self.character.natuMod}' if self.character.natuMod < 0 else f' {self.character.natuMod}', right_click_menu = ['natuMod', ['natu | Advantage','natu | Flat','natu | Disadvantage']])],
+            [sg.T(f'+{self.character.percMod}' if self.character.percMod > 0 else f'{self.character.percMod}' if self.character.percMod < 0 else f' {self.character.percMod}', right_click_menu = ['percMod', ['perc | Advantage','perc | Flat','perc | Disadvantage']])],
+            [sg.T(f'+{self.character.perfMod}' if self.character.perfMod > 0 else f'{self.character.perfMod}' if self.character.perfMod < 0 else f' {self.character.perfMod}', right_click_menu = ['perfMod', ['perf | Advantage','perf | Flat','perf | Disadvantage']])],
+            [sg.T(f'+{self.character.persMod}' if self.character.persMod > 0 else f'{self.character.persMod}' if self.character.persMod < 0 else f' {self.character.persMod}', right_click_menu = ['persMod', ['pers | Advantage','pers | Flat','pers | Disadvantage']])],
+            [sg.T(f'+{self.character.reliMod}' if self.character.reliMod > 0 else f'{self.character.reliMod}' if self.character.reliMod < 0 else f' {self.character.reliMod}', right_click_menu = ['reliMod', ['reli | Advantage','reli | Flat','reli | Disadvantage']])],
+            [sg.T(f'+{self.character.sleiMod}' if self.character.sleiMod > 0 else f'{self.character.sleiMod}' if self.character.sleiMod < 0 else f' {self.character.sleiMod}', right_click_menu = ['sleiMod', ['slei | Advantage','slei | Flat','slei | Disadvantage']])],
+            [sg.T(f'+{self.character.steaMod}' if self.character.steaMod > 0 else f'{self.character.steaMod}' if self.character.steaMod < 0 else f' {self.character.steaMod}', right_click_menu = ['steaMod', ['stea | Advantage','stea | Flat','stea | Disadvantage']])],
+            [sg.T(f'+{self.character.survMod}' if self.character.survMod > 0 else f'{self.character.survMod}' if self.character.survMod < 0 else f' {self.character.survMod}', right_click_menu = ['survMod', ['surv | Advantage','surv | Flat','surv | Disadvantage']])]], 
             element_justification='center', 
             pad=(3,0))
 
@@ -347,8 +348,13 @@ while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED:
         break
-    if event == 'testB':
-        character.printStats()
+    if 'Flat' in event:
+        sg.popup(roller.rollFlat(event, character), title='')
+    if 'Advantage' in event:
+        sg.popup(roller.rollAdv(event, character), title='')
+    if 'Disadvantage' in event:
+        sg.popup(roller.rollDis(event, character), title='')
+
 
 window.close()
 characterFile.close()
